@@ -6,22 +6,45 @@
     <description>ข่าวอัปเดตเร็ว ทันเหตุการณ์ รายชั่วโมง</description>
     <language>th-TH</language>
 
-    <!-- รายการทดสอบใหม่ ให้ dlvr.it เห็นเป็นข่าวสด -->
     <item>
-      <title>ข่าวไว ทดสอบระบบโพสต์อัตโนมัติ (รอบ 3)</title>
-      <link>https://example.com/test-news-003</link>
-      <description>โพสต์ทดสอบ: ตรวจการเชื่อม RSS → dlvr.it → Facebook Page “ข่าวไว”</description>
-      <pubDate>Wed, 13 Aug 2025 20:35:00 +0000</pubDate>
-      <guid isPermaLink="false">test-guid-20250813-003</guid>
+      <title>US annual review of China’s human rights record is shorter but remains critical</title>
+      <link>https://www.scmp.com/news/china/diplomacy/article/3321642/us-annual-review-chinas-human-rights-record-shorter-remains-sharply-critical?utm_source=rss_feed</link>
+      <description>The US State Department’s annual review of China’s human rights record, released on Tuesday, was pared back as part of a broader restructuring of its country reports but still retained many of its most politically sensitive criticisms of Beijing’s conduct. “Genocide and crimes ag</description>
+      <pubDate>Tue, 12 Aug 2025 21:38:50 +0000</pubDate>
+      <guid isPermaLink="false">20cbefb4c9b0d692c7271119fe8c5f3cbd8acd5a</guid>
     </item>
 
-    <!-- รายการเก่า (คงไว้ก็ได้ ไม่กระทบ) -->
     <item>
-      <title>เริ่มใช้งาน GitHub Pages สำเร็จ</title>
-      <link>https://example.com/hello</link>
-      <description>ไฟล์เริ่มต้นสำหรับทดสอบการดึงจาก dlvr.it</description>
-      <pubDate>Wed, 13 Aug 2025 00:00:00 +0000</pubDate>
-      <guid isPermaLink="false">starter-hello-000</guid>
+      <title>Tibet mega dam is China’s chance to build confidence with India</title>
+      <link>https://www.scmp.com/opinion/asia-opinion/article/3321493/tibet-mega-dam-chinas-chance-build-confidence-india?utm_source=rss_feed</link>
+      <description>China’s mega dam construction on the Yarlung Tsangpo (Brahmaputra) River uncovers the vulnerabilities of transboundary water mechanisms. With India suspending the Indus Waters Treaty with Pakistan and being in the process of reconsidering the Ganges Water Sharing Treaty with Bang</description>
+      <pubDate>Tue, 12 Aug 2025 21:30:08 +0000</pubDate>
+      <guid isPermaLink="false">3ffcccfa1ef3c075fde8945283bc57bff097d4bd</guid>
     </item>
+
+    <item>
+      <title>Paraguay eyes Chinese parts assembly plan amid US tariff war with China, Brazil</title>
+      <link>https://www.scmp.com/news/china/money-wealth/article/3321638/paraguay-eyes-chinese-parts-assembly-plan-amid-us-tariff-war-china-brazil?utm_source=rss_feed</link>
+      <description>Paraguayan lawmakers on Tuesday heard government ministers outline a proposed assembly law that would allow companies to manufacture electronic and digital goods locally using imported parts, many from China, as political debate grows over whether the country should end diplomati</description>
+      <pubDate>Tue, 12 Aug 2025 18:34:02 +0000</pubDate>
+      <guid isPermaLink="false">7c89f0cbdaf60e7f53631938a130b5cea8163b51</guid>
+    </item>
+
+    <item>
+      <title>Hong Kong DSE pupils ‘not affected by rising number of private candidates’</title>
+      <link>https://www.scmp.com/news/hong-kong/education/article/3321633/hong-kong-dse-pupils-not-affected-rising-number-private-candidates?utm_source=rss_feed</link>
+      <description>The performance of local students in Hong Kong’s university entrance exams has not been affected by an influx of private candidates, authorities have said, even though the number of mainland Chinese participants has grown substantially and includes some whose eligibility has been</description>
+      <pubDate>Tue, 12 Aug 2025 16:14:30 +0000</pubDate>
+      <guid isPermaLink="false">583f7c993f912dd5aa4e7a924ab3396e63780e3a</guid>
+    </item>
+
+    <item>
+      <title>‘Far from a walk in the park’: what’s next after another US-China tariff truce?</title>
+      <link>https://www.scmp.com/economy/global-economy/article/3321606/whats-next-after-us-china-tariff-truce-and-why-it-far-walk-park?utm_source=rss_feed</link>
+      <description>With the tariff truce between China and the United States extended for another 90 days, and in the lead-up to a potential meeting of their presidents later this year, room for “piecemeal agreements” exists for the two countries in terms of export controls and purchases of goods, </description>
+      <pubDate>Tue, 12 Aug 2025 15:00:07 +0000</pubDate>
+      <guid isPermaLink="false">d01720fc63fc6f78a5fac65c6ae4039db4e6a93a</guid>
+    </item>
+
   </channel>
 </rss>
