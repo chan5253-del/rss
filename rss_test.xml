@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>ข่าวไว</title>
+    <link>https://www.facebook.com/share/19wfZDqCNY/?mibextid=wwXIfr</link>
+    <description>ข่าวอัปเดตเร็ว ทันเหตุการณ์ รายชั่วโมง</description>
+    <language>th-TH</language>
+
+    <item>
+      <title>ข่าวไว ทดสอบระบบโพสต์อัตโนมัติ</title>
+      <link>https://example.com/test-news-001</link>
+      <description>นี่คือข่าวทดสอบ เพื่อเช็กการเชื่อมต่อระหว่าง RSS และเพจ Facebook ผ่าน dlvr.it</description>
+      <pubDate>Wed, 13 Aug 2025 13:55:00 +0000</pubDate>
+      <guid isPermaLink="false">test-guid-20250813-001</guid>
+    </item>
+
+    <item>
+      <title>ทหารไทยได้รับบาดเจ็บจากกับระเบิดใกล้ชายแดนกัมพูชา</title>
+      <link>https://apnews.com/article/4c43dc6b99227f15c2ba2848b5b62370</link>
+      <description>ทหารไทยได้รับบาดเจ็บจากกับระเบิดใกล้ชายแดนกัมพูชา เหตุการณ์นี้เพิ่มความตึงเครียดในพื้นที่พิพาท</description>
+      <pubDate>Tue, 12 Aug 2025 00:00:00 +0000</pubDate>
+      <guid isPermaLink="false">apnews-4c43dc6b99227f15c2ba2848b5b62370</guid>
+    </item>
+  </channel>
+</rss>
