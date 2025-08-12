@@ -5,6 +5,17 @@
     <link>https://www.facebook.com/share/19wfZDqCNY/?mibextid=wwXIfr</link>
     <description>ข่าวอัปเดตเร็ว ทันเหตุการณ์ รายชั่วโมง</description>
     <language>th-TH</language>
+
+    <!-- รายการทดสอบใหม่ ให้ dlvr.it เห็นเป็นข่าวสด -->
+    <item>
+      <title>ข่าวไว ทดสอบระบบโพสต์อัตโนมัติ (รอบ 3)</title>
+      <link>https://example.com/test-news-003</link>
+      <description>โพสต์ทดสอบ: ตรวจการเชื่อม RSS → dlvr.it → Facebook Page “ข่าวไว”</description>
+      <pubDate>Wed, 13 Aug 2025 20:35:00 +0000</pubDate>
+      <guid isPermaLink="false">test-guid-20250813-003</guid>
+    </item>
+
+    <!-- รายการเก่า (คงไว้ก็ได้ ไม่กระทบ) -->
     <item>
       <title>เริ่มใช้งาน GitHub Pages สำเร็จ</title>
       <link>https://example.com/hello</link>
