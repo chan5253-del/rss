@@ -2,15 +2,17 @@ name: Build real-news RSS hourly
 
 on:
   schedule:
-    - cron: "0 * * * *"   # รันทุกชั่วโมง (UTC) นาทีที่ 00
+    - cron: "0 * * * *"   # รันทุกชั่วโมง (UTC)
   workflow_dispatch:       # กดรันเองได้
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout repository (no bot creds)
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false   # สำคัญ! ไม่ผูก token ของบอทไว้
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -24,9 +26,8 @@ jobs:
 
       - name: Generate rss.xml from real news
         env:
-          PAGE_LINK: "https://www.facebook.com/share/19wfZDqCNY/?mibextid=wwXIfr"  # ลิงก์เพจของคุณ
-          MAX_ITEMS: "5"  # จำนวนข่าวต่อรอบ
-          # รายการ RSS ต้นทาง (เพิ่ม/ลดได้, คั่นด้วยคอมมา)
+          PAGE_LINK: "https://www.facebook.com/share/19wfZDqCNY/?mibextid=wwXIfr"
+          MAX_ITEMS: "5"
           SOURCE_FEEDS: "https://feeds.reuters.com/reuters/worldNews,https://feeds.reuters.com/reuters/technologyNews,https://www.scmp.com/rss/91/feed,https://apnews.com/hub/ap-top-news?utm_source=apnews.com&utm_medium=referral&utm_campaign=ap-rss,https://www.bangkokpost.com/rss/data/most-recent.xml"
         run: |
           python scripts/build_rss.py
@@ -35,14 +36,17 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # ล้าง extraheader ที่ checkout เคยใส่ไว้
+          git config --global http.https://github.com/.extraheader ""
 
       - name: Commit changes
         run: |
           git add rss.xml
           git commit -m "auto: update rss.xml [skip ci]" || echo "No changes to commit"
 
-      - name: Push changes
+      - name: Push changes with PAT
         env:
-          RSS_TOKEN: ${{ secrets.RSS_TOKEN }}   # ตั้ง secret นี้ใน repo ของคุณ
+          RSS_TOKEN: ${{ secrets.RSS_TOKEN }}   # ใส่ PAT ของคุณไว้ใน Secrets ชื่อนี้
         run: |
-          git push https://x-access-token:${RSS_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
+          git remote set-url origin https://x-access-token:${RSS_TOKEN}@github.com/${{ github.repository }}.git
+          git push origin HEAD:${{ github.ref_name }}
