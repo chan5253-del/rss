@@ -1,5 +1,4 @@
 import os, sys, hashlib
-from urllib.parse import urlparse
 import feedparser
 from bs4 import BeautifulSoup
 from email.utils import formatdate
@@ -12,11 +11,13 @@ def clean_html_summary(html):
     if not html:
         return ""
     soup = BeautifulSoup(html, "html.parser")
-    for t in soup(["script","style"]): t.extract()
+    for t in soup(["script","style"]):
+        t.extract()
     text = " ".join(soup.get_text(" ").split())
     return text[:280]
 
 def normalize_pubdate(entry):
+    # เก็บเวลาแบบต้นฉบับ (ไม่แปลงโซนเวลา)
     if getattr(entry, "published", None):
         return entry.published
     if getattr(entry, "updated", None):
@@ -30,7 +31,7 @@ def make_guid(link, pubdate):
 def escape(s):
     return (s or "").replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
 
-def pull():
+def pull_items():
     items = []
     for feed_url in SOURCE_FEEDS:
         try:
@@ -47,9 +48,8 @@ def pull():
         except Exception as ex:
             print("ERR feed:", feed_url, ex, file=sys.stderr)
             continue
-    # dedupe by guid
-    seen = set()
-    uniq = []
+    # ตัดซ้ำด้วย GUID และจำกัดจำนวน
+    seen, uniq = set(), []
     for it in items:
         if it["guid"] in seen:
             continue
@@ -58,23 +58,23 @@ def pull():
     return uniq[:MAX_ITEMS]
 
 def build_rss(items):
-    parts = []
-    parts.append('<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n  <channel>\n')
-    parts.append(f'    <title>ข่าวไว</title>\n    <link>{PAGE_LINK}</link>\n    <description>ข่าวอัปเดตเร็ว ทันเหตุการณ์ รายชั่วโมง</description>\n    <language>th-TH</language>\n\n')
+    out = []
+    out.append('<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n  <channel>\n')
+    out.append(f'    <title>ข่าวไว</title>\n    <link>{PAGE_LINK}</link>\n    <description>ข่าวอัปเดตเร็ว ทันเหตุการณ์ รายชั่วโมง</description>\n    <language>th-TH</language>\n\n')
     for it in items:
-        parts.append("    <item>\n")
-        parts.append(f"      <title>{escape(it['title'])}</title>\n")
-        parts.append(f"      <link>{escape(it['link'])}</link>\n")
+        out.append("    <item>\n")
+        out.append(f"      <title>{escape(it['title'])}</title>\n")
+        out.append(f"      <link>{escape(it['link'])}</link>\n")
         if it["summary"]:
-            parts.append(f"      <description>{escape(it['summary'])}</description>\n")
-        parts.append(f"      <pubDate>{escape(it['pubdate'])}</pubDate>\n")
-        parts.append(f"      <guid isPermaLink=\"false\">{it['guid']}</guid>\n")
-        parts.append("    </item>\n\n")
-    parts.append("  </channel>\n</rss>\n")
-    return "".join(parts)
+            out.append(f"      <description>{escape(it['summary'])}</description>\n")
+        out.append(f"      <pubDate>{escape(it['pubdate'])}</pubDate>\n")
+        out.append(f"      <guid isPermaLink=\"false\">{it['guid']}</guid>\n")
+        out.append("    </item>\n\n")
+    out.append("  </channel>\n</rss>\n")
+    return "".join(out)
 
 def main():
-    items = pull()
+    items = pull_items()
     xml = build_rss(items)
     with open("rss.xml", "w", encoding="utf-8") as f:
         f.write(xml)
