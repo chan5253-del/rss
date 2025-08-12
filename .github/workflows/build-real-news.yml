@@ -1,0 +1,40 @@
+name: Build real-news RSS hourly
+
+on:
+  schedule:
+    - cron: "0 * * * *"  # Every hour (UTC)
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install feedparser requests beautifulsoup4
+      - name: Generate rss.xml from real news
+        env:
+          PAGE_LINK: "https://www.facebook.com/share/19wfZDqCNY/?mibextid=wwXIfr"
+          MAX_ITEMS: "5"
+          SOURCE_FEEDS: "https://feeds.reuters.com/reuters/worldNews,https://feeds.reuters.com/reuters/technologyNews,https://www.scmp.com/rss/91/feed,https://apnews.com/hub/ap-top-news?utm_source=apnews.com&utm_medium=referral&utm_campaign=ap-rss,https://www.bangkokpost.com/rss/data/most-recent.xml"
+        run: |
+          python scripts/build_rss.py
+      - name: Commit changes
+        run: |
+          git config user.name "rss-bot"
+          git config user.email "rss-bot@users.noreply.github.com"
+          git add rss.xml
+          git commit -m "auto: update rss.xml [skip ci]" || echo "No changes"
+      - name: Push changes
+        env:
+          RSS_TOKEN: ${{ secrets.RSS_TOKEN }}
+        run: |
+          REMOTE="https://${RSS_TOKEN}@github.com/${{ github.repository }}.git"
+          git push "$REMOTE" HEAD:${{ github.ref_name }}
