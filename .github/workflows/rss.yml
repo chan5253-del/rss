@@ -1,0 +1,60 @@
+name: Update RSS hourly
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # ทุกชั่วโมง นาทีที่ 00 (UTC)
+  workflow_dispatch:       # เผื่อกดรันเองได้ทันที
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Generate rss.xml
+        run: |
+          python - << 'PY'
+          from datetime import datetime, timezone
+          now = datetime.now(timezone.utc)
+          pub = now.strftime("%a, %d %b %Y %H:%M:%S +0000")
+          guid = now.strftime("auto-%Y%m%d-%H%M%S")
+          rss = f'''<?xml version="1.0" encoding="UTF-8" ?>
+          <rss version="2.0">
+            <channel>
+              <title>ข่าวไว</title>
+              <link>https://www.facebook.com/share/19wfZDqCNY/?mibextid=wwXIfr</link>
+              <description>ข่าวอัปเดตเร็ว ทันเหตุการณ์ รายชั่วโมง</description>
+              <language>th-TH</language>
+
+              <item>
+                <title>ข่าวไว ทดสอบระบบโพสต์อัตโนมัติ</title>
+                <link>https://example.com/test-news</link>
+                <description>ไฟล์นี้ถูกอัปเดตอัตโนมัติผ่าน GitHub Actions</description>
+                <pubDate>{pub}</pubDate>
+                <guid isPermaLink="false">{guid}</guid>
+              </item>
+            </channel>
+          </rss>
+          '''
+          open("rss.xml", "w", encoding="utf-8").write(rss)
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "rss-bot"
+          git config user.email "rss-bot@users.noreply.github.com"
+          git add rss.xml
+          git commit -m "chore: update rss.xml [skip ci]" || echo "No changes to commit"
+
+      - name: Push changes
+        env:
+          RSS_TOKEN: ${{ secrets.RSS_TOKEN }}
+        run: |
+          REMOTE="https://${RSS_TOKEN}@github.com/${{ github.repository }}.git"
+          git push "$REMOTE" HEAD:${{ github.ref_name }}
